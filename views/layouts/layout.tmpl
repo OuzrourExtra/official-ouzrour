@@ -1,0 +1,38 @@
+{{ define "layouts/layout" }}
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ .Title }}</title>
+    <link href="/static/css/style.css" rel="stylesheet">
+    <viewport content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+</head>
+<body class="bg-base-100 text-base-content">
+
+    <header class="p-4 w-full bg-gradient-to-r from-blue-700 to-blue-950 text-white">
+        <div class="w-full text-center">
+            <h1 class="font-bold text-2xl">Ouzrour Website</h1>
+            <p class="text-sm">Un site rapide, sécurisé et puissant.</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        {{ template "home/content" . }}
+    </main>
+
+    <footer class="footer footer-center bg-gradient-to-b from-zinc-950 to-blue-700 text-white p-10">
+        <aside>
+            <img src="/static/img/ouzrour-white.svg" alt="logo">
+            <p class="font-bold">
+                <span class="text-xl text-teal-400">Ouzrour Website.</span><br />
+                Enseignant, Programmeur et Web Designer
+            </p>
+            <p>© 2025 - Tous droits réservés</p>
+        </aside>
+    </footer>
+</body>
+</html>
+<script src="/static/js/anime.js"></script>
+{{ end }}

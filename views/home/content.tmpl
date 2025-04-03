@@ -1,0 +1,118 @@
+{{ define "home/content" }}
+<!-- Profil -->
+<div class="w-full flex bg-blue-100 py-4 justify-center font-bold uppercase text-3xl italic text-blue-800">
+    Propriétaire du site
+</div>
+
+
+
+<div class="container mx-auto p-4 max-w-xl">
+
+    <div class="card bg-base-100 shadow-xl border border-gray-300 flex items-center gap-4 p-6">
+
+
+
+        <!-- Avatar -->
+
+        <div class="avatar">
+
+            <div class="w-24 rounded-full ring ring-teal-500 ring-offset-base-100 bg-gradient-to-r from-blue-200 to-sky-900 ring-offset-2">
+
+                <img src="static/img/me-directeur-2.png" alt="Ton Avatar" />
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Contenu du profil -->
+
+        <div class="flex-1 text-center">
+
+            <h2 class="text-2xl font-bold text-teal-700">Ilyas Ouzrour</h2>
+
+            <p class="text-sm text-gray-600 italic">Développeur Full Stack passionné par la vitesse, la sécurité et la
+
+                clarté.</p>
+
+
+
+            <!-- Tags / Compétences -->
+
+            <div class="mt-3 flex flex-wrap gap-2 font-bold text-xs justify-center">
+
+                <span class="badge bg-teal-700 text-white">Maths</span>
+
+                <span class="badge bg-teal-700 text-white">Pédagogie</span>
+
+                <span class="badge bg-sky-900 text-white">Go</span>
+
+                <span class="badge bg-sky-900 text-white">Node</span>
+
+                <span class="badge bg-sky-900 text-white">Python</span>
+
+                <span class="badge bg-yellow-400 text-black">CSS 3</span>
+
+                <span class="badge bg-yellow-400 text-black">TailwindCSS</span>
+
+                <span class="badge bg-yellow-400 text-black">Vue3</span>
+
+                <span class="badge bg-yellow-400 text-black">Nuxt.js</span>
+
+                <span class="badge bg-purple-700 text-white">Montage</span>
+
+                <span class="badge bg-purple-700 text-white">Photoshop</span>
+
+                <span class="badge bg-purple-700 text-white">Illustrator</span>
+
+                <span class="badge bg-pink-700 text-white">Mailing</span>
+
+                <span class="badge bg-blue-700 capitalize text-white">économie</span>
+
+                <span class="badge bg-blue-700 text-white">Bourse</span>
+
+                <span class="badge bg-amber-700 text-white">Réparation</span>
+
+                <span class="badge bg-zinc-700 text-white">Linux Administration</span>
+
+            </div>
+
+
+
+            <!-- Liens sociaux -->
+
+            <div class="mt-4 space-x-2 text-center">
+
+                <a href="https://github.com/ouzrour" class="btn btn-sm btn-outline btn-primary uppercase">
+
+                    <i class="fa-brands fa-github mr-1"></i> GitHub
+
+                </a>
+
+                <a href="mailto:ilyas.ouzrour@gmail.com" class="btn btn-sm btn-outline btn-error uppercase">
+
+                    <i class="fa-solid fa-envelope mr-1"></i> Contact
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Tâches -->
+<div class="w-full flex bg-blue-200 py-4 justify-center font-bold uppercase text-3xl italic text-blue-800">
+    Les Tâches Essentielles
+</div>
+
+<div class="container mx-auto px-4 py-4 space-y-4">
+    {{ range .Tasks }}
+        {{ template "partials/taskCard" . }}
+    {{ end }}
+</div>
+{{ end }}

@@ -1,0 +1,44 @@
+[
+    {
+        "id":1,
+        "Title": "Créer une interface utilisateur moderne",
+        "Description": "Concevoir une interface responsive pour le module de gestion de projet.",
+        "Date": "2025-04-01",
+        "PlannedDate": "2025-05-08",
+        "Progress": 65,
+        "Image": "/static/img/bitcoin.jpg",
+        "Tags": [
+            {
+                "Name": "Business",
+                "Color": "bg-sky-900"
+            },
+            {
+                "Name": "Dev",
+                "Color": "bg-teal-700"
+            },
+            {
+                "Name": "Study",
+                "Color": "bg-yellow-400 text-black"
+            }
+        ]
+    },
+    {
+        "id":2,
+        "Title": "Implémenter l’authentification JWT",
+        "Description": "Créer un système d'authentification sécurisé avec JWT et bcrypt.",
+        "Date": "2025-04-02",
+        "PlannedDate": "2025-04-10",
+        "Progress": 40,
+        "Image": "/static/img/jwt.jpg",
+        "Tags": [
+            {
+                "Name": "Dev",
+                "Color": "bg-teal-700"
+            },
+            {
+                "Name": "Security",
+                "Color": "bg-gray-700"
+            }
+        ]
+    }
+]

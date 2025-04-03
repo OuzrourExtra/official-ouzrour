@@ -1,0 +1,10 @@
+{
+    "watch": [
+        "cmd",
+        "views",
+        "config",
+        "static"
+    ],
+    "ext": "go,tmpl,css",
+    "exec": "go run cmd/server/main.go"
+}
