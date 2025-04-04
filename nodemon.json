@@ -3,7 +3,10 @@
         "cmd",
         "views",
         "config",
-        "static"
+        "static",
+        "handlers",
+        "models",
+        "routes"
     ],
     "ext": "go,tmpl,css",
     "exec": "go run cmd/server/main.go"

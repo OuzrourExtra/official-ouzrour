@@ -1,0 +1,90 @@
+{{ define "tasks/tasks" }}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mes Tâches</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 py-10 px-4">
+
+  <div class="max-w-6xl mx-auto">
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-3xl font-bold text-teal-700">Mes Tâches</h1>
+      <a href="/logout" class="text-sm text-red-500 hover:underline">Se déconnecter</a>
+    </div>
+
+    {{ range . }}
+    <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm mb-5">
+      <div class="flex justify-between items-center">
+        <div>
+          <h2 class="text-xl font-semibold text-gray-800">{{ .Title }}</h2>
+          <p class="text-gray-600 text-sm mt-1">{{ .Description }}</p>
+          <p class="text-sm text-gray-400 mt-1">🗓️ Créée le {{ .Date }} — Prévue : {{ .PlannedDate }}</p>
+          <div class="flex flex-wrap gap-2 mt-2">
+            {{ range .Tags }}
+              <span class="px-2 py-1 text-xs rounded {{ .Color }}">{{ .Name }}</span>
+            {{ end }}
+          </div>
+        </div>
+        <form method="POST" action="/tasks/delete/{{ .ID }}">
+          <button type="submit"
+                  class="px-3 py-1 bg-red-600 text-white text-xs rounded hover:bg-red-700">Supprimer</button>
+        </form>
+      </div>
+
+      <form method="POST" action="/tasks/update/{{ .ID }}" class="grid sm:grid-cols-2 gap-4 mt-4">
+        <input type="text" name="title" value="{{ .Title }}" placeholder="Titre"
+               class="border px-3 py-2 rounded w-full" required />
+        <input type="text" name="description" value="{{ .Description }}" placeholder="Description"
+               class="border px-3 py-2 rounded w-full" />
+        <input type="text" name="plannedDate" value="{{ .PlannedDate }}" placeholder="Date prévue"
+               class="border px-3 py-2 rounded w-full" />
+        <input type="text" name="image" value="{{ .Image }}" placeholder="Image URL"
+               class="border px-3 py-2 rounded w-full" />
+        <input type="number" name="progress" value="{{ .Progress }}" placeholder="Progression %"
+               class="border px-3 py-2 rounded w-full" />
+        <select multiple name="tags[]" class="border px-3 py-2 rounded w-full">
+          <option value="Business">Business</option>
+          <option value="Dev">Dev</option>
+          <option value="Study">Study</option>
+          <option value="Others">Others</option>
+        </select>
+        <div class="sm:col-span-2 text-right">
+          <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm">
+            Modifier
+          </button>
+        </div>
+      </form>
+    </div>
+    {{ end }}
+
+    <div class="mt-10 bg-white p-6 shadow rounded-xl border">
+      <h2 class="text-lg font-semibold text-gray-800 mb-4">Ajouter une nouvelle tâche</h2>
+      <form method="POST" action="/tasks/add" class="grid sm:grid-cols-2 gap-4">
+        <input type="text" name="title" placeholder="Titre" class="border px-3 py-2 rounded w-full" required />
+        <input type="text" name="description" placeholder="Description" class="border px-3 py-2 rounded w-full" />
+        <input type="text" name="plannedDate" placeholder="Date prévue (YYYY-MM-DD)"
+               class="border px-3 py-2 rounded w-full" />
+        <input type="text" name="image" placeholder="Lien image" class="border px-3 py-2 rounded w-full" />
+        <input type="number" name="progress" placeholder="Progression (%)"
+               class="border px-3 py-2 rounded w-full" />
+        <select multiple name="tags[]" class="border px-3 py-2 rounded w-full">
+          <option value="Business">Business</option>
+          <option value="Dev">Dev</option>
+          <option value="Study">Study</option>
+          <option value="Others">Others</option>
+        </select>
+        <div class="sm:col-span-2 text-right">
+          <button type="submit" class="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700 text-sm">
+            Ajouter
+          </button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</body>
+</html>
+{{ end }}

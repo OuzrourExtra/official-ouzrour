@@ -1,61 +1,54 @@
 package main
 
 import (
-    "encoding/json"
-    "net/http"
-    "os"
-	"fmt"
+	"log"
 
-    "github.com/gin-gonic/gin"
-    "github.com/ouzrourextra/official-ouzrour/config"
+	"github.com/gin-contrib/sessions"
+	"github.com/gin-contrib/sessions/cookie"
+	"github.com/gin-gonic/gin"
+
+	"github.com/ouzrourextra/official-ouzrour/config"
+	"github.com/ouzrourextra/official-ouzrour/handlers"
 )
 
-type Tag struct {
-	Name  string `json:"Name"`
-	Color string `json:"Color"`
-}
-
-type Task struct {
-	ID          int     `json:"id"`
-	Title       string  `json:"Title"`
-	Description string  `json:"Description"`
-	Date        string  `json:"Date"`
-	PlannedDate string  `json:"PlannedDate"` // ✅ ce champ doit exister et commencer par majuscule
-	Progress    int     `json:"Progress"`
-	Image       string  `json:"Image"`
-	Tags        []Tag   `json:"Tags"`
-}
-
-
-func loadTasks() []Task {
-    file, err := os.ReadFile("data/tasks.json")
-    if err != nil {
-        return []Task{}
-    }
-
-    var tasks []Task
-    _ = json.Unmarshal(file, &tasks)
-    return tasks
-}
-
 func main() {
-    r := gin.Default()
-	r.Use(gin.Logger())
-	r.Use(gin.Recovery())
+	gin.SetMode(gin.ReleaseMode)
+	r := gin.Default()
 
-    r.Static("/static", "./static")
-    r.HTMLRender = config.LoadTemplates()
-	
-    r.GET("/", func(c *gin.Context) {
-        c.HTML(http.StatusOK, "home/index", gin.H{
-            "Title": "Tâches Essentielles",
-            "Tasks": loadTasks(),
-        })
-    })
+	// Middleware : fichiers statiques
+	r.Static("/static", "./static")
 
-	
-	fmt.Printf("🧪 Nb tâches chargées : %d\n", len(loadTasks()))
+	// HTMLRender : chargé avec Gin-compatible multitemplate
+	r.HTMLRender = config.LoadTemplates()
 
+	// Session sécurisée
+	store := cookie.NewStore([]byte("Ime8hm9HPmihiMTRYwFv7xJIaAi47oGTw79Q+mNjtXBvNVrkCFOkpq4aI5EZ2l3zvMi4gMqC0yPxBzWwLfjvlQ=="))
+	store.Options(sessions.Options{
+		HttpOnly: true,
+		Secure:   false, // true en production
+		Path:     "/",
+		SameSite: 2, // Strict
+	})
+	r.Use(sessions.Sessions("session", store))
 
-    r.Run("localhost:8080")
+	// Routes publiques
+	r.GET("/", handlers.Home)
+
+	// Auth
+	r.GET("/login", handlers.LoginPage)
+	r.POST("/login", handlers.Login)
+	r.GET("/logout", handlers.Logout)
+
+	// Zone protégée
+	protected := r.Group("/tasks")
+	protected.Use(handlers.RequireAuth())
+	{
+		protected.GET("/", handlers.TasksIndex)
+		protected.POST("/add", handlers.TaskAdd)
+		protected.POST("/update/:id", handlers.TaskUpdate)
+		protected.POST("/delete/:id", handlers.TaskDelete)
+	}
+
+	log.Println("✅ Serveur lancé sur : http://localhost:8080")
+	r.Run("localhost:8080")
 }
