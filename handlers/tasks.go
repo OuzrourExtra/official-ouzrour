@@ -121,6 +121,7 @@ func parseTags(names []string) []models.Tag {
 		"Dev":      "bg-teal-700 text-white",
 		"Study":    "bg-yellow-400 text-black",
 		"Research":   "bg-red-700 text-white",
+		"Others"  : "bg-gray-700 text-white",
 	}
 	for _, n := range names {
 		if c, ok := colors[n]; ok {

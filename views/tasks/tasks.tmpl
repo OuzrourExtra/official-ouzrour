@@ -1,17 +1,17 @@
 {{ define "tasks/tasks" }}
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mes Tâches</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="/static/css/style.css" rel="stylesheet">
 </head>
 <body class="bg-gray-50 py-10 px-4">
 
   <div class="max-w-6xl mx-auto">
     <div class="flex justify-between items-center mb-8">
-      <h1 class="text-3xl font-bold text-teal-700">Mes Tâches</h1>
+      <h1 class="text-3xl font-bold text-teal-700">📋 Mes Tâches</h1>
       <a href="/logout" class="text-sm text-red-500 hover:underline">Se déconnecter</a>
     </div>
 
@@ -36,54 +36,69 @@
 
       <form method="POST" action="/tasks/update/{{ .ID }}" class="grid sm:grid-cols-2 gap-4 mt-4">
         <input type="text" name="title" value="{{ .Title }}" placeholder="Titre"
-               class="border px-3 py-2 rounded w-full" required />
+               class="input input-bordered w-full" required />
         <input type="text" name="description" value="{{ .Description }}" placeholder="Description"
-               class="border px-3 py-2 rounded w-full" />
-        <input type="text" name="plannedDate" value="{{ .PlannedDate }}" placeholder="Date prévue"
-               class="border px-3 py-2 rounded w-full" />
+               class="input input-bordered w-full" />
+        <input type="date" name="plannedDate" value="{{ .PlannedDate }}"
+               class="input input-bordered w-full" />
         <input type="text" name="image" value="{{ .Image }}" placeholder="Image URL"
-               class="border px-3 py-2 rounded w-full" />
+               class="input input-bordered w-full" />
         <input type="number" name="progress" value="{{ .Progress }}" placeholder="Progression %"
-               class="border px-3 py-2 rounded w-full" />
-        <select multiple name="tags[]" class="border px-3 py-2 rounded w-full">
-          <option value="Business">Business</option>
-          <option value="Dev">Dev</option>
-          <option value="Study">Study</option>
-          <option value="Others">Others</option>
+               class="input input-bordered w-full" />
+
+        <select multiple name="tags[]" class="select select-bordered w-full h-40" required>
+          {{ $selected := .Tags }}
+          <option value="Economy"
+            {{ range $selected }}{{ if eq .Name "Economy" }}selected{{ end }}{{ end }}>
+            💼 Economy
+          </option>
+          <option value="Dev"
+            {{ range $selected }}{{ if eq .Name "Dev" }}selected{{ end }}{{ end }}>
+            💻 Dev
+          </option>
+          <option value="Study"
+            {{ range $selected }}{{ if eq .Name "Study" }}selected{{ end }}{{ end }}>
+            📚 Study
+          </option>
+          <option value="Research"
+            {{ range $selected }}{{ if eq .Name "Research" }}selected{{ end }}{{ end }}>
+            🔬 Research
+          </option>
+          <option value="Others"
+            {{ range $selected }}{{ if eq .Name "Others" }}selected{{ end }}{{ end }}>
+            🌀 Others
+          </option>
         </select>
+
         <div class="sm:col-span-2 text-right">
-          <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 text-sm">
-            Modifier
-          </button>
+          <button type="submit" class="btn btn-primary">Modifier</button>
         </div>
       </form>
     </div>
     {{ end }}
 
     <div class="mt-10 bg-white p-6 shadow rounded-xl border">
-      <h2 class="text-lg font-semibold text-gray-800 mb-4">Ajouter une nouvelle tâche</h2>
+      <h2 class="text-lg font-semibold text-gray-800 mb-4">➕ Ajouter une nouvelle tâche</h2>
       <form method="POST" action="/tasks/add" class="grid sm:grid-cols-2 gap-4">
-        <input type="text" name="title" placeholder="Titre" class="border px-3 py-2 rounded w-full" required />
-        <input type="text" name="description" placeholder="Description" class="border px-3 py-2 rounded w-full" />
-        <input type="text" name="plannedDate" placeholder="Date prévue (YYYY-MM-DD)"
-               class="border px-3 py-2 rounded w-full" />
-        <input type="text" name="image" placeholder="Lien image" class="border px-3 py-2 rounded w-full" />
-        <input type="number" name="progress" placeholder="Progression (%)"
-               class="border px-3 py-2 rounded w-full" />
-        <select multiple name="tags[]" class="border px-3 py-2 rounded w-full">
-          <option value="Business">Business</option>
-          <option value="Dev">Dev</option>
-          <option value="Study">Study</option>
-          <option value="Others">Others</option>
+        <input type="text" name="title" placeholder="Titre" class="input input-bordered w-full" required />
+        <input type="text" name="description" placeholder="Description" class="input input-bordered w-full" />
+        <input type="date" name="plannedDate" class="input input-bordered w-full" />
+        <input type="text" name="image" placeholder="Lien image" class="input input-bordered w-full" />
+        <input type="number" name="progress" placeholder="Progression (%)" class="input input-bordered w-full" />
+
+        <select multiple name="tags[]" class="select select-bordered w-full h-40" required>
+          <option value="Economy">💼 Economy</option>
+          <option value="Dev">💻 Dev</option>
+          <option value="Study">📚 Study</option>
+          <option value="Research">🔬 Research</option>
+          <option value="Others">🌀 Others</option>
         </select>
+
         <div class="sm:col-span-2 text-right">
-          <button type="submit" class="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700 text-sm">
-            Ajouter
-          </button>
+          <button type="submit" class="btn bg-teal-600 hover:bg-teal-700 text-white">Ajouter</button>
         </div>
       </form>
     </div>
-
   </div>
 </body>
 </html>
