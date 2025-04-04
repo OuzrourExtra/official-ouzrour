@@ -3,9 +3,11 @@ package main
 import (
 	"log"
 
+
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
+	"github.com/gin-contrib/gzip"
 
 	"github.com/ouzrourextra/official-ouzrour/config"
 	"github.com/ouzrourextra/official-ouzrour/handlers"
@@ -15,6 +17,9 @@ func main() {
 	gin.SetMode(gin.ReleaseMode)
 	r := gin.Default()
 
+
+	// Ajoute gzip à toutes les routes
+	r.Use(gzip.Gzip(gzip.BestCompression, gzip.WithExcludedExtensions([]string{".png", ".jpg", ".jpeg", ".gif", ".webp"})))
 	// Middleware : fichiers statiques
 	r.Static("/static", "./static")
 
